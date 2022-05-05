@@ -8,3 +8,7 @@ def create_folder(path: str) -> None:
 
 def join_path(base_path: str, union_path: str) -> str:
     return os.path.join(base_path, union_path)
+
+
+def list_dir(path: str) -> list[str]:
+    return os.listdir(path)

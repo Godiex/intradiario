@@ -11,7 +11,9 @@ def add_days_to_date(date: datetime, days: int) -> datetime:
     return date + datetime.timedelta(days=days)
 
 
-def get_date_formatted(date: datetime, format_date: FormatDates) -> str:
+def get_str_date_formatted(date: datetime, format_date: FormatDates) -> str:
     return date.strftime(format_date.value)
 
 
+def get_date_of_str(str_date: str, format_date: FormatDates) -> datetime:
+    return datetime.datetime.strptime(str_date, format_date.value)
