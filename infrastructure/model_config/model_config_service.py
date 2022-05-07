@@ -1,5 +1,5 @@
-from infrastructure.config import ChirpsConfig
-from infrastructure.project_path_constants import ProjectPathConstants
+from infrastructure.model_config.config import ChirpsConfig
+from infrastructure.model_config.project_path_constants import ProjectPathConstants
 from shared.json_utils import parse_to_dictionary
 
 

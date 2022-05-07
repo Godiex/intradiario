@@ -154,3 +154,6 @@ cython_debug/
 
 #jetbrains IDE
 .idea/
+
+#librerias
+GDAL-3.3.2-cp39-cp39-win_amd64.whl

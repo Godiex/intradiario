@@ -1,4 +1,4 @@
-from infrastructure.project_path import ProjectPath
+from infrastructure.model_config.project_path import ProjectPath
 
 
 class ProjectPathConstants:
