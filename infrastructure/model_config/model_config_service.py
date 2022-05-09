@@ -1,9 +1,9 @@
-from infrastructure.model_config.config import ChirpsConfig
-from infrastructure.model_config.project_path_constants import ProjectPathConstants
+from infrastructure.model_config.data_source_config_model import ChirpsConfig
+from infrastructure.model_config.path_constants import ProjectPathConstants
 from shared.json_utils import parse_to_dictionary
 
 
-class ModelConfig:
+class ModelConfigService:
     def __init__(self, project_path_constants: ProjectPathConstants):
         self.project_path_constants = project_path_constants
 

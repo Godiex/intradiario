@@ -1,5 +1,3 @@
-
-
 class DataSourceConfig(object):
     def __init__(self, files_name):
         super().__init__()

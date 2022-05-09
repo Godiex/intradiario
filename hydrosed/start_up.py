@@ -2,7 +2,7 @@ import sys
 from dependency_injector.wiring import Provide, inject
 
 from infrastructure.container import Container
-from infrastructure.data_source_service import ExternalDataSourceService
+from infrastructure.data_source_service.data_source_service import ExternalDataSourceService
 
 
 def wire_modules():
