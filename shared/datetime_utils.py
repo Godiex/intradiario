@@ -3,8 +3,12 @@ import datetime
 from shared.constants_application import FormatDates
 
 
-def get_current_date() -> datetime:
+def get_current_day() -> datetime:
     return datetime.date.today()
+
+
+def get_current_date() -> datetime:
+    return datetime.datetime.now()
 
 
 def add_days_to_date(date: datetime, days: int) -> datetime:

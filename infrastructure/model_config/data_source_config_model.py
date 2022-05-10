@@ -20,8 +20,19 @@ class ExternalDataSourceConfig(DataSourceConfig):
 
 class ChirpsConfig(ExternalDataSourceConfig):
 
-    def __init__(self, files_name, server_url, output_path):
+    def __init__(
+        self,
+        files_name,
+        server_url,
+        output_path,
+        stations_coordinates_path,
+        coordinates_path,
+        basins_areas_path
+    ):
         ExternalDataSourceConfig.__init__(self, files_name, server_url, output_path)
+        self.stations_coordinates_path = stations_coordinates_path
+        self.coordinates_path = coordinates_path
+        self.basins_areas_path = basins_areas_path
 
 
 class IdeamConfig(ExternalDataSourceConfig):

@@ -10,3 +10,4 @@ class ProjectPathConstants:
         self.path_chirps_config = f'{self.base_path}\\00_Metadata\\_config\\Chirps-config.json'
         self.path_project_config = f'{self.base_path}\\00_Metadata\\_config\\Projects-config.json'
         self.path_project_params_config = f'{self.base_path}\\00_Metadata\\_config\\ProjectsParams.json'
+

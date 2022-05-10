@@ -1,11 +1,17 @@
 from enum import Enum
 
 
+class Granularity(Enum):
+    ONE_HOUR = "1H"
+    DIARY = "H"
+
+
 class FormatDates(Enum):
     YEAR_POINT_MONTH_DAY = "%Y.%m%d"
     YEAR_MONTH_DAY_SLASH = "%Y/%m/%d/"
     DAY_MONTH_YEAR = "%d/%m/%Y"
     YEAR_MONTH_DAY_HOUR_MINUTES = "%Y%m%d %H%M"
+    HOUR_MINUTES = "%I:%M%p"
     DAY_MONTH_YEAR_HOUR_MINUTES = "%d/%m/%Y %H%M"
 
 
@@ -18,4 +24,3 @@ class FileOpeningModes(Enum):
     TEXT_MODE = "t"
     OPEN_AND_TRUNCATE = "wb"
     OPEN_AND_WITHOUT_TRUNCATE = "rb"
-
