@@ -14,13 +14,18 @@ def wire_modules():
 
 @inject
 def run_app(chirps_service: ExternalDataSourceService = Provide[Container.chirps_service]):
-    try:
-        menssage.info("Inicio descarga datos")
-        chirps_service.get_data()
-        menssage.success("Finalizacion descarga datos")
+    menssage.info("Inicio descarga datos")
+    chirps_service.get_data()
+    menssage.success("Finalizacion descarga datos")
 
-        menssage.info("Inicio procesamiento de datos")
-        chirps_service.process_data()
-        menssage.success("Finalizacion procesamiento de datos")
-    except Exception as ex:
-        menssage.error(f"error {ex}")
+    menssage.info("Inicio procesamiento de datos")
+    chirps_service.process_data()
+    menssage.success("Finalizacion procesamiento de datos")
+
+    menssage.info("Inicio generacion de preciptacion por estacion")
+    chirps_service.generate_precipitation_by_season()
+    menssage.success("Finalizacion generacion de preciptacion por estacion")
+
+    menssage.info("Inicio tratamiento de datos")
+    chirps_service.basin()
+    menssage.success("Finalizacion tratamiento de datos")

@@ -1,12 +1,17 @@
 class ProjectConfig:
-    projects = []
-    parameterization = []
-    fortran_path = ""
-    report_path = ""
-    metadata_path = ""
-    summary_info = ""
-    time_series_info = ""
-    delta_time = 88000
+    def __init__(
+        self,
+        projects,
+        parameterization,
+        summary_info,
+        time_series_info,
+        delta_time=88000
+    ):
+        self.projects = projects
+        self.parameterization = parameterization
+        self.summary_info = summary_info
+        self.time_series_info = time_series_info
+        self.delta_time = delta_time
 
 
 class ProjectParameters:

@@ -13,7 +13,7 @@ class ExternalDataSourceService(DataSourceService):
         pass
 
     @abstractmethod
-    def gauge(self):
+    def generate_precipitation_by_season(self):
         pass
 
     @abstractmethod

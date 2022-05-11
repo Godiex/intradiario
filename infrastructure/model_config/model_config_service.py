@@ -1,11 +1,23 @@
 from infrastructure.model_config.data_source_config_model import ChirpsConfig
 from infrastructure.model_config.path_constants import ProjectPathConstants
+from infrastructure.model_config.project_config import ProjectConfig
 from shared.json_utils import parse_to_dictionary
 
 
 class ModelConfigService:
     def __init__(self, project_path_constants: ProjectPathConstants):
         self.project_path_constants = project_path_constants
+
+    def get_project_config(self) -> ProjectConfig:
+        project_config_path = self.project_path_constants.project_config_path
+        project_config = parse_to_dictionary(project_config_path)
+        return ProjectConfig(
+            project_config["projects"],
+            project_config["parametrization"],
+            project_config["summaryString"],
+            project_config["timeSeriesString"],
+            project_config["deltaTime"]
+        )
 
     def get_config_chirps(self) -> ChirpsConfig:
         chirps_path = self.project_path_constants.path_chirps_config
