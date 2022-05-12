@@ -11,11 +11,3 @@ class ExternalDataSourceService(DataSourceService):
     @abstractmethod
     def process_data(self):
         pass
-
-    @abstractmethod
-    def generate_precipitation_by_season(self):
-        pass
-
-    @abstractmethod
-    def basin(self):
-        pass

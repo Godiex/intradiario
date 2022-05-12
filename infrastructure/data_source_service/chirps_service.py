@@ -23,6 +23,7 @@ class ChirpsService(ExternalDataSourceService):
     __ideal_size = 1024
     __top_cell = 6158060
     __lower_cell = 6906903
+    __daily_distribution = 1/24
     granularity = Granularity.ONE_HOUR.value
 
     @inject
@@ -39,7 +40,7 @@ class ChirpsService(ExternalDataSourceService):
         self.__download_data()
 
     def __download_data(self):
-        current_date = datetime_utils.add_days_to_date(datetime_utils.get_current_day(), -1)
+        current_date = datetime_utils.get_current_day()
         date_str = datetime_utils.get_str_date_formatted(current_date, FormatDates.YEAR_MONTH_DAY_SLASH)
         for file_number in range(0, self.__amount_file):
             file_name_formatted_date = self.__generate_file_name_formatted_date(current_date, file_number)
@@ -63,7 +64,7 @@ class ChirpsService(ExternalDataSourceService):
 
     def __generate_folder_path(self):
         current_date = datetime_utils.get_current_date()
-        date_str = datetime_utils.get_str_date_formatted(current_date, FormatDates.YEAR_MONTH_DAY_HOUR_MINUTES)
+        date_str = datetime_utils.get_str_date_formatted(current_date, FormatDates.YEAR_MONTH_DAY)
         return folder_utils.join_path(self.__chirps_config.output_path, date_str)
 
     # endregion
@@ -75,18 +76,13 @@ class ChirpsService(ExternalDataSourceService):
         tiff_data_frame = pandas.DataFrame(data={'DATE': dates, 'FILE': files_name})
         tiff_data_frame.set_index('DATE', inplace=True)
         results = [self.__generate_vector(file_name) for n, file_name in enumerate(tiff_data_frame['FILE'])]
-        self.__interpolate_data(results, tiff_data_frame)
+        self.__time_series_resampling(results, tiff_data_frame)
         folder_utils.delete_folder(self.__folder_path)
 
-    def __interpolate_data(self, results, tiff_data_frame):
+    def __time_series_resampling(self, results, tiff_data_frame):
         aux_forecast = pandas.DataFrame(data=results, index=tiff_data_frame.index, columns=self.__coordinates.POINTID)
-        if self.granularity in [Granularity.ONE_HOUR.value, Granularity.DIARY.value]:
-            aux_forecast = aux_forecast.cumsum(axis=0)
-            aux_forecast = aux_forecast.resample(self.granularity).asfreq()
-            aux_forecast = aux_forecast.interpolate(method='linear', limit_direction='forward', axis='index')
-            self.__forecasts = aux_forecast
-        else:
-            self.__forecasts = aux_forecast
+        self.__forecasts = aux_forecast * self.__daily_distribution
+        self.__forecasts = self.__forecasts.asfreq(freq=self.granularity, method='pad')
 
     def __generate_vector(self, file_name):
         n_cols = 'ncols'
@@ -109,31 +105,3 @@ class ChirpsService(ExternalDataSourceService):
         return datetime_utils.get_date_of_str(f"{day}/{month}/{year}", FormatDates.DAY_MONTH_YEAR)
 
     # endregion
-
-    def generate_precipitation_by_season(self):
-        pre_gauge = [self.interpolate_data(i) for i in range(0, len(self.__forecasts))]
-        pre_gauge = numpy.asarray(pre_gauge)
-        pre_gauge = numpy.where(pre_gauge < 0, 0, pre_gauge)
-        self.__forecast_at_gauges = pandas.DataFrame(
-            data=pre_gauge,
-            index=self.__forecasts.index,
-            columns=self.__stations_coordinates.COD
-        )
-
-    def interpolate_data(self, i):
-        preprocess = numpy.asarray(self.__forecasts)
-        interpolate = Rbf(self.__coordinates.X, self.__coordinates.Y, preprocess[i, :], function='linear')
-        return interpolate(self.__stations_coordinates.ESTE, self.__stations_coordinates.NORTE)
-
-    def basin(self):
-        basins_areas = pandas.read_csv(self.__chirps_config.basins_areas_path)
-        self.__basins_precipitation = pandas.DataFrame()
-        for project in self.__projects:
-            precipitation_code = numpy.asarray(basins_areas.POINTID[project], dtype=int)
-            precipitation_percentage = numpy.asarray(basins_areas.PORC[project])
-            precipitation_series = numpy.asarray(self.__forecasts[precipitation_code])
-            dates = numpy.asarray(self.__forecasts[precipitation_code].index)
-            precipitation_accumulate = precipitation_series * precipitation_percentage.T
-            accumulate = precipitation_accumulate.sum(axis=1)
-            precipitation = pandas.DataFrame(data=accumulate, index=dates, columns=[project])
-            self.__basins_precipitation = pandas.concat([self.__basins_precipitation, precipitation], axis=1)
