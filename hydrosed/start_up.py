@@ -21,4 +21,3 @@ def run_app(chirps_service: ExternalDataSourceService = Provide[Container.chirps
     menssage.info("Inicio procesamiento de datos")
     chirps_service.process_data()
     menssage.success("Finalizacion procesamiento de datos")
-

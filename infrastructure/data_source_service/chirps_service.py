@@ -1,10 +1,9 @@
 import datetime
 import math
 import pandas
-import numpy
 import requests
 from dependency_injector.wiring import inject
-from scipy.interpolate import Rbf
+from pandas import DataFrame
 
 from infrastructure.data_source_service.data_source_service import ExternalDataSourceService
 from infrastructure.model_config.data_source_config_model import ChirpsConfig
@@ -16,7 +15,7 @@ from shared import geo_utils
 
 
 class ChirpsService(ExternalDataSourceService):
-    __forecasts = None
+    __forecasts: DataFrame = None
     __forecast_at_gauges = None
     __basins_precipitation = None
     __amount_file = 16
@@ -103,5 +102,4 @@ class ChirpsService(ExternalDataSourceService):
         month = data[month_and_day][0:2]
         day = data[month_and_day][2:4]
         return datetime_utils.get_date_of_str(f"{day}/{month}/{year}", FormatDates.DAY_MONTH_YEAR)
-
     # endregion
