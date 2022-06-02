@@ -26,3 +26,4 @@ def create_folder_with_subfolders(path: str) -> None:
 
 def exist_folder(path: str) -> bool:
     return os.path.exists(path)
+    

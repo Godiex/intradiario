@@ -48,3 +48,4 @@ class ModelConfigService:
             ideam_config["output_path"],
             output_path + series_paths["coordinates"]
         )
+        
