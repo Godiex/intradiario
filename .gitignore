@@ -5,6 +5,8 @@ __pycache__/
 
 # C extensions
 *.so
+*.csv
+*.xlsx
 
 # Distribution / packaging
 .Python
@@ -157,3 +159,8 @@ cython_debug/
 
 #librerias
 GDAL-3.3.2-cp39-cp39-win_amd64.whl
+
+#files
+*config.json
+launch.json
+ProjectsParams.json

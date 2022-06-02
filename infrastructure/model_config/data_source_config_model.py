@@ -37,8 +37,15 @@ class ChirpsConfig(ExternalDataSourceConfig):
 
 class IdeamConfig(ExternalDataSourceConfig):
 
-    def __init__(self, files_name, server_url, output_path):
+    def __init__(
+        self,
+        files_name,
+        server_url,
+        output_path,
+        coordinates_path
+    ):
         ExternalDataSourceConfig.__init__(self, files_name, server_url, output_path)
+        self.coordinates_path = coordinates_path
 
 
 class SiataConfig(ExternalDataSourceConfig):
