@@ -101,5 +101,5 @@ class ChirpsService(ExternalDataSourceService):
         year = data[year]
         month = data[month_and_day][0:2]
         day = data[month_and_day][2:4]
-        return datetime_utils.get_date_of_str(f"{day}/{month}/{year}", FormatDates.DAY_MONTH_YEAR)
+        return datetime_utils.get_date_of_str(f"{day}/{month}/{year}", FormatDates.DAY_MONTH_YEAR_SLASH)
     # endregion

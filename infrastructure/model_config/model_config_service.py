@@ -1,4 +1,4 @@
-from infrastructure.model_config.data_source_config_model import ChirpsConfig
+from infrastructure.model_config.data_source_config_model import ChirpsConfig, IdeamConfig
 from infrastructure.model_config.path_constants import ProjectPathConstants
 from infrastructure.model_config.project_config import ProjectConfig
 from shared.json_utils import parse_to_dictionary
@@ -16,6 +16,7 @@ class ModelConfigService:
             project_config["parametrization"],
             project_config["summaryString"],
             project_config["timeSeriesString"],
+            project_config["logPath"],
             project_config["deltaTime"]
         )
 
@@ -32,4 +33,18 @@ class ModelConfigService:
             output_path + series_paths["stations_coordinates"],
             output_path + series_paths["coordinates"],
             output_path + series_paths["basins_areas_path"],
+        )
+
+
+    def get_config_ideam(self) -> IdeamConfig:
+        ideam_path = self.project_path_constants.path_ideam_config
+        ideam_config = parse_to_dictionary(ideam_path)
+        series_paths = ideam_config["relative_series_path"]
+        output_path = ideam_config["output_path"]
+
+        return IdeamConfig(
+            ideam_config["files_name"],
+            ideam_config["server_url"],
+            ideam_config["output_path"],
+            output_path + series_paths["coordinates"]
         )

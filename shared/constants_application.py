@@ -9,7 +9,9 @@ class Granularity(Enum):
 class FormatDates(Enum):
     YEAR_POINT_MONTH_DAY = "%Y.%m%d"
     YEAR_MONTH_DAY_SLASH = "%Y/%m/%d/"
-    DAY_MONTH_YEAR = "%d/%m/%Y"
+    YEAR_MONTH_DAY_HOUR = "%Y%m%d-%H"
+    DAY_MONTH_YEAR_SLASH = "%d/%m/%Y"
+    DAY_MONTH_YEAR = "%d%m%Y"
     YEAR_MONTH_DAY = "%Y%m%d"
     HOUR_MINUTES = "%I:%M%p"
     DAY_MONTH_YEAR_HOUR_MINUTES = "%d/%m/%Y %H%M"
